@@ -73,6 +73,15 @@ window.addEventListener("load", function () {
     }).then((unityInstance) => {
       unityInstanceRef = unityInstance;
       loadingBar.style.display = "none";
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "visible") {
+            console.log("Application gained focus.");
+            unityInstance.SendMessage('VisibilityManager', 'OnFocus');
+        } else {
+            console.log("Application lost focus.");
+            unityInstance.SendMessage('VisibilityManager', 'OnBlur');
+        }
+    });
     }).catch((message) => {
       alert(message);
     });
