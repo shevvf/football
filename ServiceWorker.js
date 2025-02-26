@@ -1,13 +1,13 @@
 // #if USE_DATA_CACHING
 // const cacheName = "DefaultCompany-StartHeadSoccer-1.0";
 // const contentToCache = [
-//     "Build/Football.loader.js",
-//     "Build/Football.framework.js.unityweb",
+//     "Build/WebGL.loader.js",
+//     "Build/WebGL.framework.js.unityweb",
 // #if USE_THREADS
 //     "Build/",
 // #endif
-//     "Build/Football.data.unityweb",
-//     "Build/Football.wasm.unityweb",
+//     "Build/WebGL.data.unityweb",
+//     "Build/WebGL.wasm.unityweb",
 //     "TemplateData/style.css"
 
 // ];

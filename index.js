@@ -36,11 +36,11 @@ window.addEventListener("load", function () {
   }
 
   var buildUrl = "Build";
-  var loaderUrl = buildUrl + "/Football.loader.js";
+  var loaderUrl = buildUrl + "/WebGL.loader.js";
   var config = {
-    dataUrl: buildUrl + "/Football.data.unityweb",
-    frameworkUrl: buildUrl + "/Football.framework.js.unityweb",
-    codeUrl: buildUrl + "/Football.wasm.unityweb",
+    dataUrl: buildUrl + "/WebGL.data.unityweb",
+    frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
+    codeUrl: buildUrl + "/WebGL.wasm.unityweb",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
     productName: "StartHeadSoccer",
