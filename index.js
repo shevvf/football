@@ -65,6 +65,16 @@ window.addEventListener("load", function () {
 
   loadingBar.style.display = "block";
 
+  function sendPlatformToUnity() {
+    if (unityInstanceRef && typeof unityInstanceRef.SendMessage === "function") {
+        const platform = window.Telegram.WebApp.platform;
+        console.log("Send platform to Unity:", platform);
+        unityInstanceRef.SendMessage("PlatformReceiver", "ReceivePlatform", platform);
+    } else {
+        console.error("Unity instance is not ready or SendMessage is not available!");
+    }
+}
+
   var script = document.createElement("script");
   script.src = loaderUrl;
   script.onload = () => {
@@ -73,6 +83,9 @@ window.addEventListener("load", function () {
     }).then((unityInstance) => {
       unityInstanceRef = unityInstance;
       loadingBar.style.display = "none";
+
+      sendPlatformToUnity();
+
       document.addEventListener("visibilitychange", function () {
         if (document.visibilityState === "visible") {
             console.log("Application gained focus.");
