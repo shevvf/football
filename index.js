@@ -72,8 +72,17 @@ window.addEventListener("load", function () {
         unityInstanceRef.SendMessage("PlatformReceiver", "ReceivePlatform", platform);
     } else {
         console.error("Unity instance is not ready or SendMessage is not available!");
-    }
+  }
 }
+
+  function sendCurrentOrientation() {
+      const currentOrientation = screen.orientation.type;
+      if (unityInstanceRef && typeof unityInstanceRef.SendMessage === "function") {
+          unityInstanceRef.SendMessage("OrientationManager", "OnOrientationChange", currentOrientation);
+      }
+  }
+
+  window.addEventListener("orientationchange", sendCurrentOrientation);
 
   var script = document.createElement("script");
   script.src = loaderUrl;
@@ -85,6 +94,7 @@ window.addEventListener("load", function () {
       loadingBar.style.display = "none";
 
       sendPlatformToUnity();
+      sendCurrentOrientation();
 
       document.addEventListener("visibilitychange", function () {
         if (document.visibilityState === "visible") {
