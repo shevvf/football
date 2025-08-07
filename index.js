@@ -93,7 +93,7 @@ window.addEventListener("load", function () {
 
         const userData = {
             username: user.username || '',
-            photoUrl: getJpgPhotoUrl(user.photo_url) || ''
+            photoUrl: user.photo_url || '',
         };
 
         const userDataJson = JSON.stringify(userData);
@@ -107,11 +107,6 @@ window.addEventListener("load", function () {
     } catch (error) {
         console.error("Failed to fetch or send user data:", error);
     }
-  }
-
-  function getJpgPhotoUrl(svgOrJpgUrl) {
-    if (!svgOrJpgUrl) return null;
-    return svgOrJpgUrl.replace(/\.svg$/i, ".jpg");
   }
 
   window.addEventListener("orientationchange", sendCurrentOrientation);
