@@ -82,6 +82,33 @@ window.addEventListener("load", function () {
       }
   }
 
+  function fetchAndSendUserData() {
+    try {
+        const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+
+        if (!user) {
+            console.warn("No user data available in Telegram WebApp.");
+            return;
+        }
+
+        const userData = {
+            username: user.username || '',
+            photoUrl: user.photo_url || '',
+        };
+
+        const userDataJson = JSON.stringify(userData);
+
+        if (unityInstanceRef && typeof unityInstanceRef.SendMessage === "function") {
+            console.log("Sending user data to Unity:", userDataJson);
+            unityInstanceRef.SendMessage("WebAppUserReceiver", "WebAppUserReceiver", userDataJson);
+        } else {
+            console.warn("Unity instance not ready. Cannot send user data now. Will retry...");
+        }
+    } catch (error) {
+        console.error("Failed to fetch or send user data:", error);
+    }
+  }
+
   window.addEventListener("orientationchange", sendCurrentOrientation);
 
   var script = document.createElement("script");
@@ -95,6 +122,7 @@ window.addEventListener("load", function () {
 
       sendPlatformToUnity();
       sendCurrentOrientation();
+      fetchAndSendUserData(); 
 
       document.addEventListener("visibilitychange", function () {
         if (document.visibilityState === "visible") {

@@ -11,8 +11,21 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         window.Telegram.WebApp.requestFullscreen();
-        //window.Telegram.WebApp.lockOrientation();
         window.Telegram.WebApp.ready();
+
+          var user = window.Telegram.WebApp.initDataUnsafe.user;
+
+            var userData = {
+                id: user.id,
+                firstName: user.first_name,
+                lastName: user.last_name || '',
+                username: user.username || '',
+                languageCode: user.language_code || '',
+                photoUrl: user.photo_url || '',
+                isPremium: user.is_premium || false,
+                joinedBy: user.start_param || ''
+            };   
+            userDataJson = JSON.stringify(userData);
       });
   </script>
   </head>
