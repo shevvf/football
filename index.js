@@ -100,7 +100,7 @@ window.addEventListener("load", function () {
 
         if (unityInstanceRef && typeof unityInstanceRef.SendMessage === "function") {
             console.log("Sending user data to Unity:", userDataJson);
-            unityInstanceRef.SendMessage("WebAppUserReceiver", "WebAppUserReceiver", userDataJson);
+            unityInstanceRef.SendMessage("WebAppUserReceiver", "ReceiveWebAppUser", userDataJson);
         } else {
             console.warn("Unity instance not ready. Cannot send user data now. Will retry...");
         }
