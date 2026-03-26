@@ -67,19 +67,26 @@ window.addEventListener("load", function () {
 
   function sendPlatformToUnity() {
     if (unityInstanceRef && typeof unityInstanceRef.SendMessage === "function") {
-        const platform = window.Telegram.WebApp.platform;
-        console.log("Send platform to Unity:", platform);
-        unityInstanceRef.SendMessage("PlatformReceiver", "ReceivePlatform", platform);
+      const platform = window.Telegram.WebApp.platform;
+      console.log("Send platform to Unity:", platform);
+      unityInstanceRef.SendMessage("PlatformReceiver", "ReceivePlatform", platform);
     } else {
-        console.error("Unity instance is not ready or SendMessage is not available!");
+      console.error("Unity instance is not ready or SendMessage is not available!");
+    }
   }
-}
 
   function sendCurrentOrientation() {
-      const currentOrientation = screen.orientation.type;
-      if (unityInstanceRef && typeof unityInstanceRef.SendMessage === "function") {
-          unityInstanceRef.SendMessage("OrientationManager", "OnOrientationChange", currentOrientation);
-      }
+    if (!unityInstanceRef || typeof unityInstanceRef.SendMessage !== "function") return;
+
+    let orientationType = "unknown";
+    if (screen.orientation && screen.orientation.type) {
+      orientationType = screen.orientation.type;
+    } 
+    else {
+      const isLandscape = window.innerWidth > window.innerHeight;
+      orientationType = isLandscape ? "landscape-primary" : "portrait-primary";
+    }
+    unityInstanceRef.SendMessage("OrientationManager", "OnOrientationChange", orientationType);
   }
 
   function fetchAndSendUserData() {
@@ -109,6 +116,7 @@ window.addEventListener("load", function () {
     }
   }
 
+  window.addEventListener("resize", sendCurrentOrientation);
   window.addEventListener("orientationchange", sendCurrentOrientation);
 
   var script = document.createElement("script");
